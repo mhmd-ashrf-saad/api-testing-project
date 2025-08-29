@@ -1,0 +1,20 @@
+{
+  "name": "api-testing-project",
+  "version": "1.0.0",
+  "description": "This project demonstrates **API testing automation** using **Postman**, **Newman**, and **Jenkins CI/CD**.   The goal is to show how to test APIs, generate professional reports, and integrate them into a CI/CD pipeline.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mhmd-ashrf-saad/api-testing-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mhmd-ashrf-saad/api-testing-project/issues"
+  },
+  "homepage": "https://github.com/mhmd-ashrf-saad/api-testing-project#readme"
+}

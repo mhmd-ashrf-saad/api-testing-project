@@ -1,0 +1,2328 @@
+{
+	"info": {
+		"_postman_id": "c7325672-5c14-45d9-a8e1-d8e0da559d0d",
+		"name": "JSONPlaceholder API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47843064",
+		"_collection_link": "https://mohamed-ashraf-s-team.postman.co/workspace/Team-Workspace~b3a99b2b-bd11-4b10-8f95-f00da3bb4188/collection/47843064-c7325672-5c14-45d9-a8e1-d8e0da559d0d?action=share&source=collection_link&creator=47843064"
+	},
+	"item": [
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "get all posts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 200ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);",
+											"});",
+											"",
+											"// Body length",
+											"pm.test(\"Should return 100 posts\", function(){ ",
+											"    const json = pm.response.json();",
+											"    pm.expect(json.length).to.equal(100);",
+											"});",
+											"",
+											"// field validation",
+											"pm.test(\"Post has expected fields\", function(){ ",
+											"    const json = pm.response.json();",
+											"    const firstPost = json[0]; // Access the first element",
+											"    pm.expect(firstPost).to.have.property(\"userId\");",
+											"    pm.expect(firstPost).to.have.property(\"id\");",
+											"    pm.expect(firstPost).to.have.property(\"title\");",
+											"    pm.expect(firstPost).to.have.property(\"body\");",
+											"",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/posts",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get post by id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"    const json = pm.response.json();",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 200ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);",
+											"});",
+											"",
+											"",
+											"// field validation",
+											"pm.test(\"Post has expected fields\", function(){ ",
+											"",
+											"    pm.expect(json).to.have.property(\"userId\");",
+											"    pm.expect(json).to.have.property(\"id\");",
+											"    pm.expect(json).to.have.property(\"title\");",
+											"    pm.expect(json).to.have.property(\"body\");",
+											"",
+											"});",
+											"",
+											"pm.test(\"Post should have expected values\",function(){",
+											"    pm.expect(json.userId).to.eql(1);",
+											"    pm.expect(json.id).to.eql(1);",
+											"    pm.expect(json.title).to.eql(\"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\");",
+											"    ",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "reqres-free-v1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/posts/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "send new post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const json = pm.response.json();",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 200ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Post has expected fields\", function(){ ",
+											"",
+											"    pm.expect(json).to.have.property(\"userId\");",
+											"    pm.expect(json).to.have.property(\"id\");",
+											"    pm.expect(json).to.have.property(\"title\");",
+											"    pm.expect(json).to.have.property(\"body\");",
+											"",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 1,\n    \"id\": 101,\n    \"title\": \"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\",\n    \"body\": \"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/posts",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"const requestData = JSON.parse(pm.request.body.raw);",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 200ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);   ",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response contains only provided fields\", function () {",
+											"    // Check that only the fields sent in request are present",
+											"    Object.keys(requestData).forEach(key => {",
+											"        pm.expect(jsonData).to.have.property(key);",
+											"    });",
+											"",
+											"",
+											"      // Verify the values match",
+											"    Object.keys(requestData).forEach(key => {",
+											"        pm.expect(jsonData[key]).to.eql(requestData[key]);",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response doesn't contain unexpected fields\", function () {",
+											"    const expectedFields = Object.keys(requestData);",
+											"    const responseFields = Object.keys(jsonData);",
+											"    ",
+											"    // All response fields should be in expected fields",
+											"    responseFields.forEach(field => {",
+											"        pm.expect(expectedFields).to.include(field);",
+											"    });",
+											"});",
+											"",
+											"",
+											"pm.test(\"Updated data matches request data\", function () {",
+											"    const requestData = JSON.parse(pm.request.body.raw);",
+											"    pm.expect(jsonData.title).to.eql(requestData.title);",
+											"    pm.expect(jsonData.body).to.eql(requestData.body);",
+											"    pm.expect(jsonData.userId).to.eql(requestData.userId);",
+											"    pm.expect(jsonData.id).to.eql(requestData.id);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "reqres-free-v1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 1,\n    \"id\": 1,\n    \"title\": \"updated\",\n    \"body\": \"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/posts/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 200ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);",
+											"});",
+											"",
+											"pm.test(\"Response is empty object\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.eql({});",
+											"});",
+											"",
+											"pm.test(\"Content-Type header is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"pm.test(\"Connection header is keep-alive\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Connection\")).to.eql(\"keep-alive\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 1,\n    \"id\": 101,\n    \"title\": \"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\",\n    \"body\": \"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/posts/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": [
+						{
+							"name": "get invalid post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/posts/9999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										"9999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Invalid Post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 200ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);",
+											"});",
+											"",
+											"pm.test(\"Response is empty object for invalid ID\", function () {",
+											"// might return empty object or error",
+											"    try {",
+											"        pm.expect(jsonData).to.be.an('object');",
+											"    } catch (e) {",
+											"        // Response might not be JSON",
+											"        pm.expect(pm.response.text()).to.be.empty;",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/posts/10000",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										"10000"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "get all comments",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response body has 500 Object\",function(){",
+											"    pm.expect(jsonData.length).to.eql(500);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response body is an array\", function () {",
+											"    let jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\");",
+											"});",
+											"",
+											"pm.test(\"Each comment has required fields\", function () {",
+											"    let jsonData = pm.response.json();",
+											"    jsonData.forEach(comment => {",
+											"        pm.expect(comment).to.have.property(\"postId\");",
+											"        pm.expect(comment).to.have.property(\"id\");",
+											"        pm.expect(comment).to.have.property(\"name\");",
+											"        pm.expect(comment).to.have.property(\"email\");",
+											"        pm.expect(comment).to.have.property(\"body\");",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"All emails are valid\", function () {",
+											"    let jsonData = pm.response.json();",
+											"    let emailRegex = /^[^@]+@[^@]+\\.[^@]+$/;",
+											"    jsonData.forEach(comment => {",
+											"        pm.expect(comment.email).to.match(emailRegex);",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get comment by id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"    var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"comment contains id=1\", function () {",
+											"    pm.expect(jsonData.id).to.eql(1);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/comments/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get comments on posts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Response time is less than 500s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/posts/1/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										"1",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Comment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Request body matches response body\",function(){",
+											"let requestBody = JSON.parse(pm.request.body.raw);",
+											"",
+											"pm.expect(jsonData.postId).to.eql(requestBody.postId);",
+											"pm.expect(jsonData.name).to.eql(requestBody.name);",
+											"pm.expect(jsonData.email).to.eql(requestBody.email);",
+											"pm.expect(jsonData.body).to.eql(requestBody.body);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "  {\n        \"postId\": 501,\n        \"id\": 501,\n        \"name\": \"id labore ex et quam laborum\",\n        \"email\": \"Eliseo@gardner.biz\",\n        \"body\": \"laudantium enim quasi est quidem magnam voluptate ipsam eos\\ntempora quo necessitatibus\\ndolor quam autem quasi\\nreiciendis et nam sapiente accusantium\"\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateComment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"const requestData = JSON.parse(pm.request.body.raw);",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);   ",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response contains only provided fields\", function () {",
+											"    Object.keys(requestData).forEach(key => {",
+											"        pm.expect(jsonData).to.have.property(key);",
+											"    });",
+											"",
+											"    Object.keys(requestData).forEach(key => {",
+											"        pm.expect(jsonData[key]).to.eql(requestData[key]);",
+											"    });",
+											"});",
+											"",
+											"",
+											"pm.test(\"Updated data matches request data\", function () {",
+											"    const requestData = JSON.parse(pm.request.body.raw);",
+											"    pm.expect(jsonData.title).to.eql(requestData.title);",
+											"    pm.expect(jsonData.body).to.eql(requestData.body);",
+											"    pm.expect(jsonData.userId).to.eql(requestData.userId);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n \"postId\": 1,\n         \"name\": \"quo vero reiciendis velit similique earum\",\n        \"email\": \"Jayne_Kuhic@sydney.com\",\n        \"body\": \"Mohamed\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/comments/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteComment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response body is empty\",function(){",
+											"pm.expect(jsonData).to.be.empty;",
+											"});",
+											"",
+											"pm.test(\"Content-Type header is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"pm.test(\"Connection header is keep-alive\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Connection\")).to.eql(\"keep-alive\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/comments/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": [
+						{
+							"name": "GetInvalidcomment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response body is empty\",function(){",
+											"pm.expect(jsonData).to.be.empty;",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/comments/501",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments",
+										"501"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetInvalidendpoint",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/commentss",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"commentss"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetInvalidSourceId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/comments/abc",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments",
+										"abc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostMissingBody",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/comments/501",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments",
+										"501"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostMissingRequiredFields",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response should contain provided field\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property(\"postId\");",
+											"    pm.expect(jsonData.postId).to.eql(1);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"postId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostWithExtraField",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response should not contain Author field\",function(){",
+											"    pm.expect(jsonData).to.not.have.property(\"author\");",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"postId\": 1,\n    \"id\": 1,\n    \"name\": \"id labore ex et quam laborum\",\n    \"email\": \"Eliseo@gardner.biz\",\n    \"body\": \"laudantium enim quasi est quidem magnam voluptate ipsam eos\\ntempora quo necessitatibus\\ndolor quam autem quasi\\nreiciendis et nam sapiente accusantium\",\n    \"author\":\"Mohamed Ashraf\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateInvalidId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"postId\": 1,\n    \"name\": \"id labore ex et quam laborum\",\n    \"email\": \"Eliseo@gardner.biz\",\n    \"body\": \"laudantium enim quasi est quidem magnam voluptate ipsam eos\\ntempora quo necessitatibus\\ndolor quam autem quasi\\nreiciendis et nam sapiente accusantium\",\n    \"author\":\"Mohamed Ashraf\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/comments/501",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments",
+										"501"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteInvalidComment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/comments/501",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"comments",
+										"501"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Albums",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "GetAllAlbum",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response body should contain 100 Albums\", function () {",
+											"    pm.expect(jsonData.length).to.eql(100);",
+											"});",
+											"",
+											"pm.test(\"First object has valid property data\", function () {",
+											"    pm.expect(jsonData[0].userId).to.eql(1);",
+											"    pm.expect(jsonData[0].id).to.eql(1);",
+											"    pm.expect(jsonData[0].title).to.eql(\"quidem molestiae enim\");",
+											"});",
+											"",
+											"pm.test(\"Each album has required fields\", function () {",
+											"    jsonData.forEach(album => {",
+											"        pm.expect(album).to.have.property(\"userId\");",
+											"        pm.expect(album).to.have.property(\"id\");",
+											"        pm.expect(album).to.have.property(\"title\");",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetAlbumById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response body contains expected data\", function () {",
+											"    pm.expect(jsonData.userId).to.eql(1);",
+											"    pm.expect(jsonData.id).to.eql(1);",
+											"    pm.expect(jsonData.title).to.eql(\"quidem molestiae enim\");",
+											"});",
+											"",
+											"pm.test(\"Album has required fields\", function () {",
+											"    pm.expect(jsonData).to.have.property(\"userId\");",
+											"    pm.expect(jsonData).to.have.property(\"id\");",
+											"    pm.expect(jsonData).to.have.property(\"title\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetAllAlbumsOfUser",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response body contains expected data\", function () {",
+											"    pm.expect(jsonData[0].userId).to.eql(1);",
+											"    pm.expect(jsonData[0].id).to.eql(1);",
+											"    pm.expect(jsonData[0].title).to.eql(\"quidem molestiae enim\");",
+											"});",
+											"",
+											"pm.test(\"Response body contains expected number of albums\", function () {",
+											"    pm.expect(jsonData.length).to.eql(10);",
+											"});",
+											"",
+											"pm.test(\"All albums belong to user 1\", function () {",
+											"    jsonData.forEach(album => {",
+											"        pm.expect(album.userId).to.eql(1);",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/1/albums",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"1",
+										"albums"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetPhotosInAlbum",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response contains photos for album 1\", function () {",
+											"    pm.expect(jsonData.length).to.be.greaterThan(0);",
+											"    jsonData.forEach(photo => {",
+											"        pm.expect(photo.albumId).to.eql(1);",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Each photo has required fields\", function () {",
+											"    jsonData.forEach(photo => {",
+											"        pm.expect(photo).to.have.property(\"albumId\");",
+											"        pm.expect(photo).to.have.property(\"id\");",
+											"        pm.expect(photo).to.have.property(\"title\");",
+											"        pm.expect(photo).to.have.property(\"url\");",
+											"        pm.expect(photo).to.have.property(\"thumbnailUrl\");",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums/1/photos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										"1",
+										"photos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostNewAlbum",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"const requestData = JSON.parse(pm.request.body.raw);",
+											"",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response matches request data\", function () {",
+											"    pm.expect(jsonData.userId).to.eql(requestData.userId);",
+											"    pm.expect(jsonData.title).to.eql(requestData.title);",
+											"});",
+											"",
+											"pm.test(\"Response has required fields\", function () {",
+											"    pm.expect(jsonData).to.have.property(\"userId\");",
+											"    pm.expect(jsonData).to.have.property(\"id\");",
+											"    pm.expect(jsonData).to.have.property(\"title\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 1,\n    \"title\": \"New Test Album\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/albums",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateAlbum",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"const requestData = JSON.parse(pm.request.body.raw);",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Updated data matches request data\", function () {",
+											"    pm.expect(jsonData.userId).to.eql(requestData.userId);",
+											"    pm.expect(jsonData.id).to.eql(requestData.id);",
+											"    pm.expect(jsonData.title).to.eql(requestData.title);",
+											"});",
+											"",
+											"pm.test(\"Response contains only provided fields\", function () {",
+											"    Object.keys(requestData).forEach(key => {",
+											"        pm.expect(jsonData).to.have.property(key);",
+											"        pm.expect(jsonData[key]).to.eql(requestData[key]);",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 1,\n    \"id\": 1,\n    \"title\": \"Updated Album Title\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/albums/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteAlbum",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response is empty object\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.eql({});",
+											"});",
+											"",
+											"pm.test(\"Content-Type header is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": [
+						{
+							"name": "GetInvalidAlbum",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response body is empty\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.empty;",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums/9999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										"9999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetAlbumsInvalidUser",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/9999/albums",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"9999",
+										"albums"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateInvalidAlbum",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 1,\n    \"id\": 9999,\n    \"title\": \"Updated Album Title\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/albums/9999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										"9999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteInvalidAlbum",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums/9999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										"9999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Photos",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "GET all photos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Response time < 500ms\", () => pm.expect(pm.response.responseTime).to.be.below(500));",
+											"pm.test(\"Array returned\", () => pm.expect(Array.isArray(jsonData)).to.be.true);",
+											"pm.test(\"Contains 5000 photos\", () => pm.expect(jsonData.length).to.eql(5000));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/photos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"photos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET single photo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Photo ID = 1\", () => pm.expect(jsonData.id).to.eql(1));",
+											"pm.test(\"Has required fields\", () => {",
+											" pm.expect(jsonData).to.have.property('albumId');",
+											" pm.expect(jsonData).to.have.property('id');",
+											" pm.expect(jsonData).to.have.property('title');",
+											" pm.expect(jsonData).to.have.property('url');",
+											" pm.expect(jsonData).to.have.property('thumbnailUrl');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/photos/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"photos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET invalid photo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status 200 (mock quirk)\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Empty object\", () => pm.expect(pm.response.json()).to.eql({}));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/photos/999999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"photos",
+										"999999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST new photo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"let requestBody = JSON.parse(pm.request.body.raw);",
+											"pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+											"pm.test(\"Matches request body\", () => {",
+											" pm.expect(jsonData.title).to.eql(requestBody.title);",
+											" pm.expect(jsonData.url).to.eql(requestData.url);",
+											" pm.expect(jsonData.thumbnailUrl).to.eql(requestBody.thumbnailUrl);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"albumId\": 1, \"title\": \"New Photo\", \"url\": \"https://via.placeholder.com/600/92c952\", \"thumbnailUrl\": \"https://via.placeholder.com/150/92c952\" }"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/photos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"photos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT update photo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Fields updated\", () => pm.expect(jsonData.title).to.eql('Updated Photo'));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"id\": 1, \"albumId\": 1, \"title\": \"Updated Photo\", \"url\": \"https://via.placeholder.com/600/771796\", \"thumbnailUrl\": \"https://via.placeholder.com/150/771796\" }"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/photos/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"photos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE photo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/photos/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"photos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": [
+						{
+							"name": "GET invalid photo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status 200 (mock quirk)\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Empty object\", () => pm.expect(pm.response.json()).to.eql({}));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/photos/999999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"photos",
+										"999999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Todos",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "GET all todos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Response time < 500ms\", () => pm.expect(pm.response.responseTime).to.be.below(500));",
+											"pm.test(\"Array returned\", () => pm.expect(Array.isArray(jsonData)).to.be.true);",
+											"pm.test(\"Contains 200 todos\", () => pm.expect(jsonData.length).to.eql(200));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/todos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"todos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET single todo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Todo ID = 1\", () => pm.expect(jsonData.id).to.eql(1));",
+											"pm.test(\"Has required fields\", () => {",
+											" pm.expect(jsonData).to.have.property('userId');",
+											" pm.expect(jsonData).to.have.property('id');",
+											" pm.expect(jsonData).to.have.property('title');",
+											" pm.expect(jsonData).to.have.property('completed');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/todos/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"todos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST new todo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"let requestBody = JSON.parse(pm.request.body.raw);",
+											"pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+											"pm.test(\"Matches request body\", () => {",
+											" pm.expect(jsonData.title).to.eql(requestBody.title);",
+											" pm.expect(jsonData.completed).to.eql(requestBody.completed);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"userId\": 1, \"title\": \"New Task\", \"completed\": false }"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/todos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"todos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT update todo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Todo updated\", () => pm.expect(jsonData.title).to.eql('Updated Task'));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"id\": 1, \"userId\": 1, \"title\": \"Updated Task\", \"completed\": true }"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/todos/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"todos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE todo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/todos/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"todos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": [
+						{
+							"name": "GET invalid todo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status 200 (mock quirk)\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Empty object\", () => pm.expect(pm.response.json()).to.eql({}));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/todos/999999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"todos",
+										"999999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "GET all users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Response time < 500ms\", () => pm.expect(pm.response.responseTime).to.be.below(500));",
+											"pm.test(\"Contains 10 users\", () => pm.expect(jsonData.length).to.eql(10));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET single user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"User ID = 1\", () => pm.expect(jsonData.id).to.eql(1));",
+											"pm.test(\"Has required fields\", () => {",
+											" pm.expect(jsonData).to.have.property('name');",
+											" pm.expect(jsonData).to.have.property('username');",
+											" pm.expect(jsonData).to.have.property('email');",
+											" pm.expect(jsonData).to.have.property('address');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST new user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"let requestBody = JSON.parse(pm.request.body.raw);",
+											"pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+											"pm.test(\"Matches request body\", () => {",
+											" pm.expect(jsonData.name).to.eql(requestBody.name);",
+											" pm.expect(jsonData.username).to.eql(requestBody.username);",
+											" pm.expect(jsonData.email).to.eql(requestBody.email);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"name\": \"John Doe\", \"username\": \"jdoe\", \"email\": \"john@example.com\", \"address\": {\"city\": \"NYC\"} }"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT update user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"User updated\", () => pm.expect(jsonData.name).to.eql('Jane Doe'));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"id\": 1, \"name\": \"Jane Doe\", \"username\": \"jane\", \"email\": \"jane@example.com\" }"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": [
+						{
+							"name": "GET invalid user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status 200 (mock quirk)\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Empty object\", () => pm.expect(pm.response.json()).to.eql({}));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/999999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"999999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
